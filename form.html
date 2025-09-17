@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Validated Form Page</title>
+  <style>
+    
+    body {
+      display: flex;
+      justify-content: center;  /* horizontally center */
+      align-items: center;   /* vertically center */
+      height: 100vh;  /* viewport height (screen height) */
+      margin: 0;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 30px 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+    }
+
+
+    .gender-options {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+
+    input[type="submit"] {
+      width: 100%;
+      background-color: #007BFF;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>User Registration</h2>
+
+    <form id="registrationForm" novalidate>
+      <!-- Full Name -->
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required pattern="[A-Za-z\s]{2,}" placeholder="enter your name">
+      <span class="error" id="nameError"></span>
+
+      <!-- Email -->
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="example@example.com">
+      <span class="error" id="emailError"></span>
+
+      <!-- Age -->
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" required min="1" max="100" placeholder="enter your age">
+      <span class="error" id="ageError"></span>
+
+      <!-- Gender -->
+      
+<label>Gender</label>
+<div class="gender-options">
+  <label>
+    <input type="radio" id="male" name="gender" value="Male">
+    Male
+  </label>
+  <label>
+    <input type="radio" id="female" name="gender" value="Female">
+    Female
+  </label>
+</div>
+<span class="error" id="genderError"></span>
+
+
+      <!-- Submit -->
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+
+   form.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  // Clear all errors
+  document.querySelectorAll(".error").forEach(el => el.textContent = '');
+
+  let valid = true;
+
+  // name validation
+  const fullname = document.getElementById('name').value.trim();
+  if (!fullname.match(/^[A-Za-z\s]{2,}$/)) {
+    document.getElementById('nameError').textContent = "Please enter a valid full name (letters only, at least 2 characters).";
+    valid = false;
+  }
+
+  // Email validation
+  const email = document.getElementById('email').value.trim();
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    document.getElementById('emailError').textContent = "Please enter a valid email address.";
+    valid = false;
+  }
+
+  // Age validation
+  const age = parseInt(document.getElementById('age').value.trim(), 10);
+  if (isNaN(age) || age < 1 || age > 100) {
+    document.getElementById('ageError').textContent = "Please enter a valid age between 1 and 100.";
+    valid = false;
+  }
+
+  // Gender validation
+  const genderChecked = document.querySelector('input[name="gender"]:checked');
+  if (!genderChecked) {
+    document.getElementById('genderError').textContent = "Please select a gender.";
+    valid = false;
+  }
+
+  if (!valid) {
+    return; // Stop form submission
+  }
+
+  // If all inputs are valid
+  const gender = genderChecked.value;
+
+  // Store data in URL parameters
+  const params = new URLSearchParams({
+    fullname,
+    email,
+    age,
+    gender
+  });
+
+  // Redirect to result page
+  window.location.href = `result.html?${params.toString()}`;
+});
+
+  </script>
+
+</body>
+</html>
