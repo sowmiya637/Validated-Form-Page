@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Submission Result</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #f0f0f0;
+    }
+
+    .result-container {
+      background-color: #fff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 400px;
+      text-align: left;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 15px;
+      color: #444;
+    }
+
+    strong {
+      color: #000;
+    }
+
+    .back-btn {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      text-align: center;
+      background-color: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+
+    .back-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="result-container">
+    <h2>Submission Summary</h2>
+    <div id="output"></div>
+    <a href="form.html" class="back-btn">Go Back to Form</a>
+  </div>
+
+  <script>
+    const fullname = localStorage.getItem("fullname") || "Not provided";
+    const email = localStorage.getItem("email") || "Not provided";
+    const age = localStorage.getItem("age") || "Not provided";
+    const gender = localStorage.getItem("gender") || "Not provided";
+
+    document.getElementById("output").innerHTML = `
+      <p><strong>Full Name:</strong> ${fullname}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Age:</strong> ${age}</p>
+      <p><strong>Gender:</strong> ${gender}</p>
+    `;
+  </script>
+
+</body>
+</html>
